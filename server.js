@@ -19,7 +19,7 @@ app.prepare().then(() => {
   
   server.listen(3000, (err) => {
     if (err) throw err;
-    console.log(`> Next.js production server running on ${process.env.APP_URL}`);
+    console.log('> Next.js production server running on http://10.0.4.106:3000');
     console.log("> Max request body size: 5GB");
   });
 });

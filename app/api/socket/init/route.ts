@@ -13,7 +13,7 @@ export async function GET() {
       })
     } else {
       // Try to initialize by calling the socket endpoint
-      const response = await fetch(`${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/socket`)
+      const response = await fetch("http://10.0.4.106:3000/api/socket")
 
       if (response.ok) {
         return NextResponse.json({

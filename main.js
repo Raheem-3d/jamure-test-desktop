@@ -191,7 +191,7 @@ function createWindow() {
       mainWindow.webContents.openDevTools({ mode: "detach" });
     }
 
-    const urlToLoad = process.env.APP_URL;
+    const urlToLoad = "http://10.0.4.106:3000";
     console.log("loading URL:", urlToLoad);
     mainWindow.loadURL(urlToLoad).catch((err) => {
       console.error("loadURL rejected:", err);
@@ -468,7 +468,7 @@ function showBuzzChatOverlay({ userId, channelId, title, messageType, id } = {})
     let previousBounds = null;
 
     // Build the appropriate URL based on message type
-    let buzzUrl = process.env.APP_URL;
+    let buzzUrl = "http://10.0.4.106:3000";
     
     // Debug: log all parameters
     console.log("Buzz parameters:", { userId, channelId, title, messageType, id });
@@ -529,7 +529,7 @@ function showBuzzChatOverlay({ userId, channelId, title, messageType, id } = {})
       mainWindow.loadURL(buzzUrl).catch((err) => {
         console.error("Buzz loadURL rejected:", err);
         // Fallback to dashboard if specific URL fails
-        mainWindow.loadURL(`${process.env.APP_URL}/dashboard?popup=true&buzz=true`);
+        mainWindow.loadURL('http://10.0.4.106:3000/dashboard?popup=true&buzz=true');
       });
       
       mainWindow.once('ready-to-show', () => {
@@ -561,7 +561,7 @@ function showBuzzChatOverlay({ userId, channelId, title, messageType, id } = {})
         mainWindow.previousBuzzState = {
           wasMaximized: wasMaximized,
           bounds: previousBounds,
-          currentUrl: mainWindow.webContents.getURL() || `${process.env.APP_URL}`
+          currentUrl: mainWindow.webContents.getURL() || 'http://10.0.4.106:3000'
         };
       }
       
@@ -574,7 +574,7 @@ function showBuzzChatOverlay({ userId, channelId, title, messageType, id } = {})
           // Load the appropriate URL
           mainWindow.loadURL(buzzUrl).catch((err) => {
             console.error("Buzz loadURL rejected:", err);
-            mainWindow.loadURL(`${process.env.APP_URL}/dashboard?popup=true&buzz=true`);
+            mainWindow.loadURL('http://10.0.4.106:3000/dashboard?popup=true&buzz=true');
           });
         }, 50);
       } else {
@@ -582,7 +582,7 @@ function showBuzzChatOverlay({ userId, channelId, title, messageType, id } = {})
         // Load the appropriate URL
         mainWindow.loadURL(buzzUrl).catch((err) => {
           console.error("Buzz loadURL rejected:", err);
-          mainWindow.loadURL(`${process.env.APP_URL}/dashboard?popup=true&buzz=true`);
+          mainWindow.loadURL('http://10.0.4.106:3000/dashboard?popup=true&buzz=true');
         });
       }
       
@@ -671,7 +671,7 @@ function exitBuzzMode(restorePreviousState = true, navigateToPrevious = true) {
           setTimeout(() => {
             mainWindow.loadURL(currentUrl).catch((err) => {
               console.error("Failed to load previous URL:", err);
-              mainWindow.loadURL(`${process.env.APP_URL}/dashboard`);
+              mainWindow.loadURL('http://10.0.4.106:3000/dashboard');
             });
           }, 100);
         }
@@ -692,7 +692,7 @@ function exitBuzzMode(restorePreviousState = true, navigateToPrevious = true) {
         
         // Navigate to dashboard
         setTimeout(() => {
-          mainWindow.loadURL(`${process.env.APP_URL}/dashboard`);
+          mainWindow.loadURL('http://10.0.4.106:3000/dashboard');
         }, 100);
       }
       
