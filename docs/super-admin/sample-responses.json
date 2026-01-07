@@ -1,0 +1,64 @@
+{
+  "organizations.list": {
+    "items": [
+      {
+        "id": "org_001",
+        "name": "Acme Inc",
+        "domain": "acme.com",
+        "adminEmails": ["owner@acme.com"],
+        "plan": "STARTER",
+        "trial": { "start": "2025-11-01T00:00:00Z", "endsAt": "2025-11-15T00:00:00Z", "daysLeft": 7 },
+        "billingStatus": "PAID",
+        "suspended": false,
+        "createdAt": "2025-09-12T09:12:23Z"
+      },
+      {
+        "id": "org_002",
+        "name": "Globex",
+        "domain": "globex.io",
+        "adminEmails": ["it@globex.io", "owner@globex.io"],
+        "plan": "PRO",
+        "trial": { "start": "2025-10-10T00:00:00Z", "endsAt": "2025-10-24T00:00:00Z", "daysLeft": 0 },
+        "billingStatus": "PAST_DUE",
+        "suspended": true,
+        "createdAt": "2025-08-20T15:04:57Z"
+      }
+    ],
+    "nextCursor": null
+  },
+  "organizations.detail": {
+    "id": "org_001",
+    "name": "Acme Inc",
+    "status": { "trial": true, "daysLeft": 7, "suspended": false },
+    "members": [
+      { "id": "u_1", "name": "Alice", "email": "alice@acme.com", "role": "OWNER" },
+      { "id": "u_2", "name": "Bob", "email": "bob@acme.com", "role": "ADMIN" }
+    ],
+    "billing": {
+      "plan": "STARTER",
+      "renewalDate": "2026-01-01T00:00:00Z",
+      "paymentMethod": "visa **** 4242",
+      "invoices": [
+        { "id": "inv_1", "status": "PAID", "date": "2025-10-01", "amount": 2000, "currency": "USD" }
+      ],
+      "billingAvailable": false
+    },
+    "settings": { "domain": "acme.com", "featureFlags": ["customDomains"] }
+  },
+  "auditLogs.list": {
+    "items": [
+      {
+        "id": "log_1",
+        "timestamp": "2025-11-08T10:00:00Z",
+        "actorId": "user_sa",
+        "actorEmail": "super@admin.io",
+        "action": "ORG_CREATE",
+        "targetOrgId": "org_001",
+        "reason": null,
+        "details": { "name": "Acme Inc" },
+        "impersonation": false
+      }
+    ],
+    "nextCursor": null
+  }
+}

@@ -1,0 +1,4 @@
+- [ ] Investigate real-time reaction updates not appearing without refresh
+- [ ] Fix socket broadcasting logic for DM and channel reactions
+- [ ] Ensure client listens and updates reactions immediately
+- [ ] Verify reactions appear without page refresh

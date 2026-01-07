@@ -1,0 +1,82 @@
+// Prisma Schema Snippets for Super Admin Dashboard
+
+// 1. Role enum extension
+// Existing Role enum currently has: ADMIN, MANAGER, EMPLOYEE, CLIENT
+// Add SUPER_ADMIN and ORG_MEMBER/ORG_ADMIN variants if desired; maintain backward compatibility.
+
+enum Role {
+  SUPER_ADMIN
+  ORG_ADMIN
+  ORG_MEMBER
+  ADMIN
+  MANAGER
+  EMPLOYEE
+  CLIENT
+}
+
+// 2. User additions (augment existing model; isSuperAdmin is derived from SUPER_ADMIN role but explicit boolean adds fast checks)
+model User {
+  id             String      @id @default(cuid())
+  email          String      @unique
+  role           Role        @default(ORG_MEMBER)
+  isSuperAdmin   Boolean     @default(false) // Seed from .env SUPERADMINS list
+  // ... existing fields
+  auditLogs      AuditLog[]  @relation("ActorLogs")
+}
+
+// 3. Organization trial fields (already present: trialStart, trialEnd, trialStatus)
+// Ensure naming consistency: rename trialEnd -> trialEndsAt (if migration feasible) for clarity.
+model Organization {
+  id           String      @id @default(cuid())
+  name         String
+  trialStart   DateTime
+  trialEndsAt  DateTime    // rename from trialEnd via migration
+  // Derived virtual: daysLeft (via query layer)
+  trialStatus  TrialStatus @default(ACTIVE)
+  suspended    Boolean     @default(false)
+  // ... existing fields
+  auditLogs    AuditLog[]
+}
+
+// 4. AuditLog enrichment (separate from ActivityLog if necessary). ActivityLog exists; we add actor linkage and impersonation flag.
+model AuditLog {
+  id            String      @id @default(cuid())
+  actorId       String?
+  actor         User?       @relation("ActorLogs", fields: [actorId], references: [id])
+  actorEmail    String?
+  action        String
+  targetOrgId   String?
+  organization  Organization? @relation(fields: [targetOrgId], references: [id])
+  reason        String?
+  details       Json?
+  impersonation Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+
+  @@index([actorId])
+  @@index([targetOrgId])
+  @@index([action])
+}
+
+// 5. Seeding script concept (pseudo-code)
+/*
+import { prisma } from './client';
+const superEmails = (process.env.SUPERADMINS || '').split(',').map(e => e.trim()).filter(Boolean);
+await Promise.all(superEmails.map(async (email) => {
+  await prisma.user.upsert({
+    where: { email },
+    update: { role: 'SUPER_ADMIN', isSuperAdmin: true },
+    create: { email, role: 'SUPER_ADMIN', isSuperAdmin: true }
+  });
+}));
+*/
+
+// 6. Impersonation Session (optional separate model if tracking durations)
+model ImpersonationSession {
+  id            String   @id @default(cuid())
+  superAdminId  String
+  targetOrgId   String
+  startedAt     DateTime @default(now())
+  endedAt       DateTime?
+  superAdmin    User     @relation(fields: [superAdminId], references: [id])
+  organization  Organization @relation(fields: [targetOrgId], references: [id])
+}

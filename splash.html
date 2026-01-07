@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Loading…</title>
+    <style>
+      html,body { height:100%; margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif; background:#121212; color:#fff; }
+      .wrap { height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; }
+      .loader { border:8px solid rgba(255,255,255,0.08); border-top:8px solid #09f; border-radius:50%; width:64px; height:64px; animation:spin 1s linear infinite; }
+      @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+      .label { opacity:0.95; display:flex; align-items:center; gap:12px; flex-direction:column; }
+      .app-icon {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
+      }
+      .app-name { margin-top:6px; font-size:14px; color:#ddd; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="loader" aria-hidden="true"></div>
+
+      <!-- Replace the src below if your icon lives somewhere else.
+           Common paths:
+             - if icon is at projectRoot/public/Desktopicon.png -> use "public/Desktopicon.png"
+             - if icon is next to splash.html -> use "./Desktopicon.png"
+             - for .ico you can still use it, but PNG is recommended for crispness.
+      -->
+      <div class="label">
+    <img 
+  class="app-icon" 
+  src="https://jamure.com/images/jamure_logo.png" 
+  alt="Jamure" 
+  onerror="this.onerror=null; this.src='/Desktopicon.ico';"
+/>
+
+        <div class="app-name">Jamure</div>
+      </div>
+    </div>
+  </body>
+</html>
