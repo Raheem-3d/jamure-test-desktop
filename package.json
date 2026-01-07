@@ -33,12 +33,12 @@
       "node_modules/sqlite3/**/*"
     ],
     "publish": [
-      {
-        "provider": "github",
-        "owner": "Raheem-3d",
-        "repo": "jamure-test-chat"
-      }
-    ],
+  {
+    "provider": "github",
+    "owner": "Raheem-3d",
+    "repo": "jamure-test-desktop"
+  }
+],
     "win": {
       "target": [
         {
